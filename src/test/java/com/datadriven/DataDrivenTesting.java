@@ -5,6 +5,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.jetbrains.annotations.NotNull;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
@@ -12,12 +13,13 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.sql.SQLOutput;
 import java.util.concurrent.TimeUnit;
 
 public class DataDrivenTesting {
 
-    public void readExcel(String filepath, String filename, String sheetName) throws IOException {
-        File filePath;
+    public void readExcel(String filepath, @NotNull String filename, String sheetName) throws IOException {
+        File filePath = null;
         File file=new File(filePath+"\\"+filename);
         FileInputStream fis=new FileInputStream(file);
         Workbook loginWorkbook=null;
@@ -54,14 +56,16 @@ public class DataDrivenTesting {
         driver.findElement(By.cssSelector("#login-email")).sendKeys(username);
         driver.findElement(By.cssSelector("#login-password")).sendKeys(password);
         driver.findElement(By.xpath("//button[contains(text(),'Sign in')]")).click();
-        Thread.sleep(3000);
+
         driver.quit();
     }
 
     public static void main(String[] args) throws IOException {
         DataDrivenTesting readFile=new DataDrivenTesting();
-        String filePath="/home/knoldus/Documents/DDT/TestData";
+        String filePath="/home/knoldus/Documents/DDT/Data";
         readFile.readExcel(filePath, "ExportExcel.xlsx","Sheet1");
-
+        System.out.println("changes done");
     }
+
+
 }
